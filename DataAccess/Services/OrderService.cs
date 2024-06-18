@@ -36,8 +36,7 @@ namespace Pryaniky.CRUD.DataAccess.Services
         }
         public async Task<string> Delete(Guid id)
         {
-            var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-            _context.Orders.Remove(order);
+            await _context.Orders.Where(x => x.Id == id).ExecuteDeleteAsync();
             await _context.SaveChangesAsync();
             return id.ToString();
         }
